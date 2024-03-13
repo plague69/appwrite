@@ -150,7 +150,6 @@ class MessagingTest extends Scope
             'Telnyx' => [
                 'providerId' => $providers[3]['_id'],
                 'name' => 'Telnyx2',
-                'customerId' => 'my-username',
                 'apiKey' => 'my-password',
             ],
             'Textmagic' => [

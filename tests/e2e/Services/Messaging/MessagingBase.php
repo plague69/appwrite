@@ -62,7 +62,6 @@ trait MessagingBase
             'telnyx' => [
                 'providerId' => ID::unique(),
                 'name' => 'telnyx1',
-                'customerId' => 'my-username',
                 'apiKey' => 'my-password',
                 'from' => '+123456789',
             ],
@@ -164,7 +163,6 @@ trait MessagingBase
             ],
             'telnyx' => [
                 'name' => 'telnyx2',
-                'customerId' => 'my-username',
                 'apiKey' => 'my-password',
             ],
             'textmagic' => [
