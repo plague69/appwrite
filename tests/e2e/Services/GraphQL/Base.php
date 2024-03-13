@@ -222,6 +222,7 @@ trait Base
     public static string $UPDATE_SENDGRID_PROVIDER = 'update_sendgrid_provider';
     public static string $UPDATE_SMTP_PROVIDER = 'update_smtp_provider';
     public static string $UPDATE_TWILIO_PROVIDER = 'update_twilio_provider';
+    public static string $UPDATE_TELESIGN_PROVIDER = 'update_telesign_provider';
     public static string $UPDATE_TELNYX_PROVIDER = 'update_telnyx_provider';
     public static string $UPDATE_TEXTMAGIC_PROVIDER = 'update_textmagic_provider';
     public static string $UPDATE_MSG91_PROVIDER = 'update_msg91_provider';
@@ -1966,7 +1967,7 @@ trait Base
                         enabled
                     }
                 }';
-            case self::$UPDATE_TELESIGN_PROVIDER:5
+            case self::$UPDATE_TELESIGN_PROVIDER:
                 return 'mutation updateTelesignProvider($providerId: String!, $name: String!, $customerId: String!, $apiKey: String!) {
                     messagingUpdateTelesignProvider(providerId: $providerId, name: $name, customerId: $customerId, apiKey: $apiKey) {
                         _id
