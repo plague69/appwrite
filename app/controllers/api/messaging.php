@@ -374,7 +374,7 @@ App::post('/v1/messaging/providers/msg91')
             ->dynamic($provider, Response::MODEL_PROVIDER);
     });
 
-    App::post('/v1/messaging/providers/telesign')
+App::post('/v1/messaging/providers/telesign')
     ->desc('Create Telesign provider')
     ->groups(['api', 'messaging'])
     ->label('audits.event', 'provider.create')
