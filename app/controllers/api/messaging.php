@@ -374,7 +374,7 @@ App::post('/v1/messaging/providers/msg91')
             ->dynamic($provider, Response::MODEL_PROVIDER);
     });
 
-App::post('/v1/messaging/providers/telesign')
+    App::post('/v1/messaging/providers/telesign')
     ->desc('Create Telesign provider')
     ->groups(['api', 'messaging'])
     ->label('audits.event', 'provider.create')
@@ -431,6 +431,81 @@ App::post('/v1/messaging/providers/telesign')
             '$id' => $providerId,
             'name' => $name,
             'provider' => 'telesign',
+            'type' => MESSAGE_TYPE_SMS,
+            'enabled' => $enabled,
+            'credentials' => $credentials,
+            'options' => $options,
+        ]);
+
+        try {
+            $provider = $dbForProject->createDocument('providers', $provider);
+        } catch (DuplicateException) {
+            throw new Exception(Exception::PROVIDER_ALREADY_EXISTS);
+        }
+
+        $queueForEvents
+            ->setParam('providerId', $provider->getId());
+
+        $response
+            ->setStatusCode(Response::STATUS_CODE_CREATED)
+            ->dynamic($provider, Response::MODEL_PROVIDER);
+    });
+
+App::post('/v1/messaging/providers/telnyx')
+    ->desc('Create Telnyx provider')
+    ->groups(['api', 'messaging'])
+    ->label('audits.event', 'provider.create')
+    ->label('audits.resource', 'provider/{response.$id}')
+    ->label('event', 'providers.[providerId].create')
+    ->label('scope', 'providers.write')
+    ->label('sdk.auth', [APP_AUTH_TYPE_ADMIN, APP_AUTH_TYPE_KEY])
+    ->label('sdk.namespace', 'messaging')
+    ->label('sdk.method', 'createTelnyxProvider')
+    ->label('sdk.description', '/docs/references/messaging/create-telnyx-provider.md')
+    ->label('sdk.response.code', Response::STATUS_CODE_CREATED)
+    ->label('sdk.response.type', Response::CONTENT_TYPE_JSON)
+    ->label('sdk.response.model', Response::MODEL_PROVIDER)
+    ->param('providerId', '', new CustomId(), 'Provider ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can\'t start with a special char. Max length is 36 chars.')
+    ->param('name', '', new Text(128), 'Provider name.')
+    ->param('from', '', new Phone(), 'Sender Phone number. Format this number with a leading \'+\' and a country code, e.g., +16175551212.', true)
+    ->param('apiKey', '', new Text(0), 'Telnyx API key.', true)
+    ->param('enabled', null, new Boolean(), 'Set as enabled.', true)
+    ->inject('queueForEvents')
+    ->inject('dbForProject')
+    ->inject('response')
+    ->action(function (string $providerId, string $name, string $from, string $apiKey, ?bool $enabled, Event $queueForEvents, Database $dbForProject, Response $response) {
+        $providerId = $providerId == 'unique()' ? ID::unique() : $providerId;
+
+        $options = [];
+
+        if (!empty($from)) {
+            $options['from'] = $from;
+        }
+
+        $credentials = [];
+
+        if (!empty($from)) {
+            $credentials['from'] = $from;
+        }
+
+        if (!empty($apiKey)) {
+            $credentials['apiKey'] = $apiKey;
+        }
+
+        if (
+            $enabled === true
+            && \array_key_exists('apiKey', $credentials)
+            && \array_key_exists('from', $options)
+        ) {
+            $enabled = true;
+        } else {
+            $enabled = false;
+        }
+
+        $provider = new Document([
+            '$id' => $providerId,
+            'name' => $name,
+            'provider' => 'telnyx',
             'type' => MESSAGE_TYPE_SMS,
             'enabled' => $enabled,
             'credentials' => $credentials,

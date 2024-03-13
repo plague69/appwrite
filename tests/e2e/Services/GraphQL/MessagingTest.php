@@ -49,6 +49,12 @@ class MessagingTest extends Scope
                 'apiKey' => 'my-password',
                 'from' => '+123456789',
             ],
+            'Telnyx' => [
+                'providerId' => ID::unique(),
+                'name' => 'Telnyx1',
+                'apiKey' => 'my-password',
+                'from' => '+123456789',
+            ],
             'Textmagic' => [
                 'providerId' => ID::unique(),
                 'name' => 'Textmagic1',
@@ -138,6 +144,12 @@ class MessagingTest extends Scope
             'Telesign' => [
                 'providerId' => $providers[3]['_id'],
                 'name' => 'Telesign2',
+                'customerId' => 'my-username',
+                'apiKey' => 'my-password',
+            ],
+            'Telnyx' => [
+                'providerId' => $providers[3]['_id'],
+                'name' => 'Telnyx2',
                 'customerId' => 'my-username',
                 'apiKey' => 'my-password',
             ],

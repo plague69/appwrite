@@ -59,6 +59,13 @@ trait MessagingBase
                 'apiKey' => 'my-password',
                 'from' => '+123456789',
             ],
+            'telnyx' => [
+                'providerId' => ID::unique(),
+                'name' => 'telnyx1',
+                'customerId' => 'my-username',
+                'apiKey' => 'my-password',
+                'from' => '+123456789',
+            ],
             'textmagic' => [
                 'providerId' => ID::unique(),
                 'name' => 'Textmagic1',
@@ -152,6 +159,11 @@ trait MessagingBase
             ],
             'telesign' => [
                 'name' => 'Telesign2',
+                'customerId' => 'my-username',
+                'apiKey' => 'my-password',
+            ],
+            'telnyx' => [
+                'name' => 'telnyx2',
                 'customerId' => 'my-username',
                 'apiKey' => 'my-password',
             ],

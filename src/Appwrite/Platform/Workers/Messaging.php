@@ -25,6 +25,7 @@ use Utopia\Messaging\Adapter\SMS as SMSAdapter;
 use Utopia\Messaging\Adapter\SMS\Mock;
 use Utopia\Messaging\Adapter\SMS\Msg91;
 use Utopia\Messaging\Adapter\SMS\Telesign;
+use Utopia\Messaging\Adapter\SMS\Telnyx;
 use Utopia\Messaging\Adapter\SMS\Textmagic;
 use Utopia\Messaging\Adapter\SMS\Twilio;
 use Utopia\Messaging\Adapter\SMS\Vonage;
@@ -407,6 +408,10 @@ class Messaging extends Action
                     'customerId' => $user,
                     'apiKey' => $password
                 ],
+                'telnyx' => [
+                    'from' => $user,
+                    'apiKey' => $password
+                ],
                 'msg91' => [
                     'senderId' => $user,
                     'authKey' => $password
@@ -458,6 +463,7 @@ class Messaging extends Action
             'twilio' => new Twilio($credentials['accountSid'], $credentials['authToken']),
             'textmagic' => new Textmagic($credentials['username'], $credentials['apiKey']),
             'telesign' => new Telesign($credentials['customerId'], $credentials['apiKey']),
+            'telnyx' => new Telnyx($credentials['apiKey'], $credentials['from']),
             'msg91' => new Msg91($credentials['senderId'], $credentials['authKey'], $credentials['templateId']),
             'vonage' => new Vonage($credentials['apiKey'], $credentials['apiSecret']),
             default => null

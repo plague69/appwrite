@@ -210,6 +210,7 @@ trait Base
     public static string $CREATE_SMTP_PROVIDER = 'create_smtp_provider';
     public static string $CREATE_TWILIO_PROVIDER = 'create_twilio_provider';
     public static string $CREATE_TELESIGN_PROVIDER = 'create_telesign_provider';
+    public static string $CREATE_TELNYX_PROVIDER = 'create_telnyx_provider';
     public static string $CREATE_TEXTMAGIC_PROVIDER = 'create_textmagic_provider';
     public static string $CREATE_MSG91_PROVIDER = 'create_msg91_provider';
     public static string $CREATE_VONAGE_PROVIDER = 'create_vonage_provider';
@@ -221,7 +222,7 @@ trait Base
     public static string $UPDATE_SENDGRID_PROVIDER = 'update_sendgrid_provider';
     public static string $UPDATE_SMTP_PROVIDER = 'update_smtp_provider';
     public static string $UPDATE_TWILIO_PROVIDER = 'update_twilio_provider';
-    public static string $UPDATE_TELESIGN_PROVIDER = 'update_telesign_provider';
+    public static string $UPDATE_TELNYX_PROVIDER = 'update_telnyx_provider';
     public static string $UPDATE_TEXTMAGIC_PROVIDER = 'update_textmagic_provider';
     public static string $UPDATE_MSG91_PROVIDER = 'update_msg91_provider';
     public static string $UPDATE_VONAGE_PROVIDER = 'update_vonage_provider';
@@ -1841,6 +1842,16 @@ trait Base
                         enabled
                     }
                 }';
+            case self::$CREATE_TELNYX_PROVIDER:
+                return 'mutation createTelnyxProvider($providerId: String!, $name: String!, $from: String!, $apiKey: String!) {
+                    messagingCreateTelnyxProvider(providerId: $providerId, name: $name, from: $from, apiKey: $apiKey) {
+                        _id
+                        name
+                        provider
+                        type
+                        enabled
+                    }
+                }';
             case self::$CREATE_TEXTMAGIC_PROVIDER:
                 return 'mutation createTextmagicProvider($providerId: String!, $name: String!, $from: String!, $username: String!, $apiKey: String!) {
                     messagingCreateTextmagicProvider(providerId: $providerId, name: $name, from: $from, username: $username, apiKey: $apiKey) {
@@ -1955,9 +1966,19 @@ trait Base
                         enabled
                     }
                 }';
-            case self::$UPDATE_TELESIGN_PROVIDER:
+            case self::$UPDATE_TELESIGN_PROVIDER:5
                 return 'mutation updateTelesignProvider($providerId: String!, $name: String!, $customerId: String!, $apiKey: String!) {
                     messagingUpdateTelesignProvider(providerId: $providerId, name: $name, customerId: $customerId, apiKey: $apiKey) {
+                        _id
+                        name
+                        provider
+                        type
+                        enabled
+                    }
+                }';
+            case self::$UPDATE_TELNYX_PROVIDER:
+                return 'mutation updateTelnyxProvider($providerId: String!, $name: String!, $apiKey: String!) {
+                    messagingUpdateTelnyxProvider(providerId: $providerId, name: $name, apiKey: $apiKey) {
                         _id
                         name
                         provider
